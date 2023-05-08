@@ -73,24 +73,59 @@ document.querySelector('.btn--close--cookie').addEventListener('click', () => {
 });
 
 //styles
-message.style.backgroundColor = '#37383d';
-console.log(message.style.backgroundColor);
+// message.style.backgroundColor = '#37383d';
+// console.log(message.style.backgroundColor);
 
-console.log(message.style.color); //not working
-console.log(getComputedStyle(message).color);
-console.log(getComputedStyle(message).height);
-message.style.height =
-  Number.parseFloat(getComputedStyle(message).height, 10) + 40 + 'px';
-console.log(message.style.height);
+// console.log(message.style.color); //not working
+// console.log(getComputedStyle(message).color);
+// console.log(getComputedStyle(message).height);
+// message.style.height =
+//   Number.parseFloat(getComputedStyle(message).height, 10) + 40 + 'px';
+// console.log(message.style.height);
 
 //document.documentElement.style.setProperty('--color-primary', 'orangered');
 
 //Attrıbutes
-const logo = document.querySelector('.nav__logo');
-console.log(logo.id);
-console.log(logo.src);
-console.log(logo.className);
+// const logo = document.querySelector('.nav__logo');
+// console.log(logo.id);
+// console.log(logo.src); // absolute link
+// console.log(logo.className);
 
 //Non-Standard
-console.log(logo.developer); // not working
-console.log(logo.getAttribute('developer'));
+// console.log(logo.developer); // not working
+// console.log(logo.getAttribute('developer'));
+
+// logo.setAttribute('bankist', 'website');
+// console.log(logo.getAttribute('src'));
+
+// const link = document.querySelector('.nav__link--btn');
+
+// console.log(link.href);
+// console.log(link.getAttribute('href'));
+
+//data attribute
+// console.log(logo.dataset.versionNumber);
+
+//classes
+// logo.classList.add('c');
+// logo.classList.remove('c');
+// logo.classList.toggle('c');
+// console.log(logo.classList.contains('c'));
+
+//Dont use
+//logo.className = 'c' // it will replace all the classes by this one only
+
+//End Lectures////////////////////////
+
+//start project///////////////////////
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', e => {
+  e.preventDefault();
+  const s1Coords = section1.getBoundingClientRect();
+  //console.log(s1Coords);
+  console.log(e.target.getBoundingClientRect());
+});
+
+//End project///////////////////////
