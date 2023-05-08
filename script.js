@@ -66,8 +66,31 @@ header.prepend(message); //add it as the first child for the element
 //header.before(message); //adding 'message' before the header
 //header.after(message); //adding 'message' after the header
 
-//De;eting the element
+//DeLeting the element
 document.querySelector('.btn--close--cookie').addEventListener('click', () => {
-  message.parentElement.removeChild(message); // we was using this before to remove or delete the element
+  //message.parentElement.removeChild(message); // we was using this before to remove or delete the element
   message.remove(); //now we use this to delete or remove the element
 });
+
+//styles
+message.style.backgroundColor = '#37383d';
+console.log(message.style.backgroundColor);
+
+console.log(message.style.color); //not working
+console.log(getComputedStyle(message).color);
+console.log(getComputedStyle(message).height);
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 40 + 'px';
+console.log(message.style.height);
+
+//document.documentElement.style.setProperty('--color-primary', 'orangered');
+
+//Attrıbutes
+const logo = document.querySelector('.nav__logo');
+console.log(logo.id);
+console.log(logo.src);
+console.log(logo.className);
+
+//Non-Standard
+console.log(logo.developer); // not working
+console.log(logo.getAttribute('developer'));
