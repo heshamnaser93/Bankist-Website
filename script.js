@@ -117,15 +117,27 @@ document.querySelector('.btn--close--cookie').addEventListener('click', () => {
 
 //End Lectures////////////////////////
 
-//start project///////////////////////
+//start project////////////////////////////////////////////////////////////////
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
 btnScrollTo.addEventListener('click', e => {
   e.preventDefault();
   const s1Coords = section1.getBoundingClientRect();
-  //console.log(s1Coords);
+  console.log(s1Coords);
   console.log(e.target.getBoundingClientRect());
+
+  console.log(
+    'Current horizontal and vertical scroll x/y :',
+    window.pageXOffset,
+    window.pageYOffset
+  );
+
+  console.log(
+    'Height/Width viewport :',
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
 });
 
-//End project///////////////////////
+//End project/////////////////////////////////////////////////////////////////
