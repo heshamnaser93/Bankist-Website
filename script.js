@@ -125,19 +125,37 @@ btnScrollTo.addEventListener('click', e => {
   e.preventDefault();
   const s1Coords = section1.getBoundingClientRect();
   console.log(s1Coords);
-  console.log(e.target.getBoundingClientRect());
+  //console.log(e.target.getBoundingClientRect());
 
+  //current scrolling
   console.log(
     'Current horizontal and vertical scroll x/y :',
     window.pageXOffset,
     window.pageYOffset
   );
 
-  console.log(
-    'Height/Width viewport :',
-    document.documentElement.clientHeight,
-    document.documentElement.clientWidth
-  );
-});
+  //as the viewport of the user
+  // console.log(
+  //   'Height/Width viewport :',
+  //   document.documentElement.clientHeight,
+  //   document.documentElement.clientWidth
+  // );
 
+  //scrolling to section one
+  //   window.scrollTo(
+  //     s1Coords.left + window.pageXOffset,
+  //     s1Coords.top + window.pageYOffset
+  //   );
+  // });
+
+  //smooth scrolling
+  window.scrollTo({
+    left: s1Coords.left + window.pageXOffset,
+    top: s1Coords.top + window.pageYOffset,
+    behavior: 'smooth',
+  });
+
+  //more modern way
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
 //End project/////////////////////////////////////////////////////////////////
