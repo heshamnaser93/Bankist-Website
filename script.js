@@ -36,9 +36,10 @@ document.addEventListener('keydown', function (e) {
 //////////////////////////////////////////
 //
 //
-//Start Lectures/////////////////////////
+//Start Lectures/////////////////////////////////////////////////////////////
 
-//Selecting Elements
+//Selecting Elements//////////////////
+
 // console.log(document.documentElement);
 // console.log(document.head);
 // console.log(document.body);
@@ -114,25 +115,40 @@ document.querySelector('.btn--close--cookie').addEventListener('click', () => {
 
 //Dont use
 //logo.className = 'c' // it will replace all the classes by this one only
+/////////////////////////////
 
-//End Lectures////////////////////////
+//Events////////////////////
+// const h1 = document.querySelector('.header__title');
+// const alert1 = () => alert('Hello!! you hovered on the header');
+
+// h1.addEventListener('mouseenter', () => {
+//   h1.style.color = '#666';
+//   h1.addEventListener('mouseenter', alert1);
+// });
+// setTimeout(h1.removeEventListener('mouseenter', alert1), 3000);
+
+//h1.onmouseenter = () => (h1.style.color = '#555');
+////////////////////////////
+
+//End Lectures/////////////////////////////////////////////////////////////////
 
 //start project////////////////////////////////////////////////////////////////
+//Scrolling//////////////////////
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
 btnScrollTo.addEventListener('click', e => {
   e.preventDefault();
   const s1Coords = section1.getBoundingClientRect();
-  console.log(s1Coords);
+  //console.log(s1Coords);
   //console.log(e.target.getBoundingClientRect());
 
   //current scrolling
-  console.log(
-    'Current horizontal and vertical scroll x/y :',
-    window.pageXOffset,
-    window.pageYOffset
-  );
+  // console.log(
+  //   'Current horizontal and vertical scroll x/y :',
+  //   window.pageXOffset,
+  //   window.pageYOffset
+  // );
 
   //as the viewport of the user
   // console.log(
@@ -149,13 +165,23 @@ btnScrollTo.addEventListener('click', e => {
   // });
 
   //smooth scrolling
-  window.scrollTo({
-    left: s1Coords.left + window.pageXOffset,
-    top: s1Coords.top + window.pageYOffset,
-    behavior: 'smooth',
-  });
+  // window.scrollTo({
+  //   left: s1Coords.left + window.pageXOffset,
+  //   top: s1Coords.top + window.pageYOffset,
+  //   behavior: 'smooth',
+  // });
 
-  //more modern way
+  //more modern way for scrolling
   section1.scrollIntoView({ behavior: 'smooth' });
 });
+//////////////////////////////
+
+//working with navigation/////
+const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min; //Random Number Formula
+console.log(randInt(10, 20));
+const randomColor = `rgb(
+  ${randInt(0, 255)},${randInt(0, 255)},${randInt(0, 255)})`;
+
+console.log(randomColor);
+//////////////////////////////
 //End project/////////////////////////////////////////////////////////////////
