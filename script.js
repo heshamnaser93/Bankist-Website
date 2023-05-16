@@ -1,7 +1,7 @@
 'use strict';
 
-///////////////////////////////////////
-// Modal window
+//start project////////////////////////////////////////////////////////////////
+// Modal window///////////////////////////
 
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
@@ -33,17 +33,59 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
-//////////////////////////////////////////
+///////////////////////////////////////////
+
+//Creating,Selecting and Deleting Elements/
+const header = document.querySelector('.header');
+const message = document.createElement('div');
+
+message.classList.add('cookie-message');
+
+message.innerHTML =
+  'We use cookies for improved functionality and analytics <button class="btn btn--close--cookie">Got it!</button>';
+header.prepend(message);
+
+//DeLeting the element
+document.querySelector('.btn--close--cookie').addEventListener('click', () => {
+  message.remove();
+});
+///////////////////////////////////////////
+
+//Scrolling to bottom//////////////////////
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', e => {
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+///////////////////////////////////////////
+
+//Page Navigation//////////////////////////
+document.querySelectorAll('.nav__link').forEach(function (el) {
+  el.addEventListener('click', function (e) {
+    e.preventDefault();
+    const id = this.getAttribute('href');
+    //console.log(id);
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+///////////////////////////////////////////
+//End project/////////////////////////////////////////////////////////////////
 //
 //
-//Start Lectures/////////////////////////////////////////////////////////////
+//
+//
 
-//Selecting Elements//////////////////
-
+//
+//
+//
+//
+//Start Lectures///////////////////////////////////////////////////////////////
+//Selecting Elements///////////////////
 // console.log(document.documentElement);
 // console.log(document.head);
 // console.log(document.body);
-const header = document.querySelector('.header');
+//const header = document.querySelector('.header');
 // console.log(document.querySelector('.header')); //most used
 // console.log(document.querySelectorAll('.section')); //most used
 // console.log(document.getElementById('section--1'));
@@ -54,24 +96,24 @@ const header = document.querySelector('.header');
 //Creating and inserting elements
 //document.insertAdjacentHTML(); //used early in this course
 
-const message = document.createElement('div');
-message.classList.add('cookie-message');
+// const message = document.createElement('div');
+// message.classList.add('cookie-message');
 
 //message.textContent = 'We use cookies for improved functionality and analytics';
-message.innerHTML =
-  'We use cookies for improved functionality and analytics <button class="btn btn--close--cookie">Got it!</button>';
+// message.innerHTML =
+//   'We use cookies for improved functionality and analytics <button class="btn btn--close--cookie">Got it!</button>';
 
-header.prepend(message); //add it as the first child for the element
+// header.prepend(message); //add it as the first child for the element
 //header.append(message); //add it as the last child to the element
 //header.append(message.cloneNode(true)); //copy 'message' also to the end of the 'header'
 //header.before(message); //adding 'message' before the header
 //header.after(message); //adding 'message' after the header
 
 //DeLeting the element
-document.querySelector('.btn--close--cookie').addEventListener('click', () => {
-  //message.parentElement.removeChild(message); // we was using this before to remove or delete the element
-  message.remove(); //now we use this to delete or remove the element
-});
+// document.querySelector('.btn--close--cookie').addEventListener('click', () => {
+//   //message.parentElement.removeChild(message); // we was using this before to remove or delete the element
+//   message.remove(); //now we use this to delete or remove the element
+// });
 
 //styles
 // message.style.backgroundColor = '#37383d';
@@ -115,9 +157,52 @@ document.querySelector('.btn--close--cookie').addEventListener('click', () => {
 
 //Dont use
 //logo.className = 'c' // it will replace all the classes by this one only
-/////////////////////////////
+//////////////////////////////////////
 
-//Events////////////////////
+//Scrolling//////////////////////////
+// const btnScrollTo = document.querySelector('.btn--scroll-to');
+// const section1 = document.querySelector('#section--1');
+
+// btnScrollTo.addEventListener('click', e => {
+//   e.preventDefault();
+//   const s1Coords = section1.getBoundingClientRect();
+//console.log(s1Coords);
+//console.log(e.target.getBoundingClientRect());
+
+//current scrolling
+// console.log(
+//   'Current horizontal and vertical scroll x/y :',
+//   window.pageXOffset,
+//   window.pageYOffset
+// );
+
+//as the viewport of the user
+// console.log(
+//   'Height/Width viewport :',
+//   document.documentElement.clientHeight,
+//   document.documentElement.clientWidth
+// );
+
+//scrolling to section one
+//   window.scrollTo(
+//     s1Coords.left + window.pageXOffset,
+//     s1Coords.top + window.pageYOffset
+//   );
+// });
+
+//smooth scrolling
+// window.scrollTo({
+//   left: s1Coords.left + window.pageXOffset,
+//   top: s1Coords.top + window.pageYOffset,
+//   behavior: 'smooth',
+// });
+
+//more modern way for scrolling
+// section1.scrollIntoView({ behavior: 'smooth' });
+//});
+/////////////////////////////////////
+
+//Events/////////////////////////////
 // const h1 = document.querySelector('.header__title');
 // const alert1 = () => alert('Hello!! you hovered on the header');
 
@@ -128,60 +213,30 @@ document.querySelector('.btn--close--cookie').addEventListener('click', () => {
 // setTimeout(h1.removeEventListener('mouseenter', alert1), 3000);
 
 //h1.onmouseenter = () => (h1.style.color = '#555');
-////////////////////////////
 
+//working with navigation
+// const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min; //Random Number Formula
+// console.log(randInt(10, 20));
+// const randomColor = () =>
+//   `rgb(${randInt(0, 255)},${randInt(0, 255)},${randInt(0, 255)})`;
+
+// console.log(randomColor());
+
+// document.querySelector('.nav__link').addEventListener('click', function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('link', e.target, e.currentTarget);
+//   console.log(e.currentTarget === this);
+
+//   //stop propagation
+//   //e.stopPropagation(); // not recommended
+// });
+// document.querySelector('.nav__links').addEventListener('click', function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('container', e.target, e.currentTarget);
+// });
+// document.querySelector('.nav').addEventListener('click', function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('nav', e.target, e.currentTarget);
+// });
+/////////////////////////////////////
 //End Lectures/////////////////////////////////////////////////////////////////
-
-//start project////////////////////////////////////////////////////////////////
-//Scrolling//////////////////////
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
-
-btnScrollTo.addEventListener('click', e => {
-  e.preventDefault();
-  const s1Coords = section1.getBoundingClientRect();
-  //console.log(s1Coords);
-  //console.log(e.target.getBoundingClientRect());
-
-  //current scrolling
-  // console.log(
-  //   'Current horizontal and vertical scroll x/y :',
-  //   window.pageXOffset,
-  //   window.pageYOffset
-  // );
-
-  //as the viewport of the user
-  // console.log(
-  //   'Height/Width viewport :',
-  //   document.documentElement.clientHeight,
-  //   document.documentElement.clientWidth
-  // );
-
-  //scrolling to section one
-  //   window.scrollTo(
-  //     s1Coords.left + window.pageXOffset,
-  //     s1Coords.top + window.pageYOffset
-  //   );
-  // });
-
-  //smooth scrolling
-  // window.scrollTo({
-  //   left: s1Coords.left + window.pageXOffset,
-  //   top: s1Coords.top + window.pageYOffset,
-  //   behavior: 'smooth',
-  // });
-
-  //more modern way for scrolling
-  section1.scrollIntoView({ behavior: 'smooth' });
-});
-//////////////////////////////
-
-//working with navigation/////
-const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min; //Random Number Formula
-console.log(randInt(10, 20));
-const randomColor = `rgb(
-  ${randInt(0, 255)},${randInt(0, 255)},${randInt(0, 255)})`;
-
-console.log(randomColor);
-//////////////////////////////
-//End project/////////////////////////////////////////////////////////////////
