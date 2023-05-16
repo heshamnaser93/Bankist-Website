@@ -61,14 +61,44 @@ btnScrollTo.addEventListener('click', e => {
 ///////////////////////////////////////////
 
 //Page Navigation//////////////////////////
-document.querySelectorAll('.nav__link').forEach(function (el) {
-  el.addEventListener('click', function (e) {
-    e.preventDefault();
-    const id = this.getAttribute('href');
-    //console.log(id);
+//by using event delegation
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault();
+  console.log(e.target);
+
+  //Matchıng Strategy
+  if (e.target.classList.contains('nav__link')) {
+    const id = e.target.getAttribute('href');
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
-  });
+  }
 });
+///////////////////////////////////////////
+
+//Tabbed Component/////////////////////////
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', e => {
+  const clicked = e.target.closest('.operations__tab');
+  console.log(clicked);
+
+  //Guard Clause => its an (if statement) which will return when it has a certain condition is matched, and none of the code after it will be excecuted
+  if (!clicked) return;
+
+  //Activate the clicked tab
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+  clicked.classList.add('operations__tab--active');
+
+  //Activate the content area
+  document
+    .querySelector('.operations__content')
+    .classList.remove('operations__content--active');
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+});
+
 ///////////////////////////////////////////
 //End project/////////////////////////////////////////////////////////////////
 //
@@ -237,6 +267,44 @@ document.querySelectorAll('.nav__link').forEach(function (el) {
 // document.querySelector('.nav').addEventListener('click', function (e) {
 //   this.style.backgroundColor = randomColor();
 //   console.log('nav', e.target, e.currentTarget);
+// });
+
+//Event Delegation
+// 1. Add Eventlistner to common parent element
+// 2. Determine what element originated the event
+
+// document.querySelector('.nav__links').addEventListener('click', function (e) {
+//   e.preventDefault();
+//   console.log(e.target);
+//   if (e.target.classList.contains('nav__link')) console.log('yes it has');
+// });
+
+//Dom Traversing
+//Going Downwards: child
+// const h1 = document.querySelector('h1');
+// const highlights = h1.querySelectorAll('.highlight');
+// console.log(highlights);
+// console.log(h1.childNodes);
+// console.log(h1.children);
+// h1.firstElementChild.style.color = 'white';
+// h1.lastElementChild.style.color = 'orangered';
+// console.log(h1.firstChild);
+
+// //Going Upwards: parent
+// console.log(h1.parentNode);
+// console.log(h1.parentElement);
+// console.log(h1.closest('.header'));
+// console.log(h1.closest('h1')); //closest can be the element itself
+
+// //Going Sideways: siblings
+// console.log(h1.previousElementSibling);
+// console.log(h1.nextElementSibling);
+// console.log(h1.previousSibling);
+// console.log(h1.nextSibling);
+
+// console.log(h1.parentElement.children); //all siblings
+// [...h1.parentElement.children].forEach(el => {
+//   if (el !== h1) console.log('Not h1!!');
 // });
 /////////////////////////////////////
 //End Lectures/////////////////////////////////////////////////////////////////
