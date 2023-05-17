@@ -64,7 +64,6 @@ btnScrollTo.addEventListener('click', e => {
 //by using event delegation
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   e.preventDefault();
-  console.log(e.target);
 
   //Matchıng Strategy
   if (e.target.classList.contains('nav__link')) {
@@ -72,6 +71,31 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
 });
+
+//Menu fade animation
+const nav = document.querySelector('.nav');
+
+const handleHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const navLink = e.target;
+
+    const siblings = navLink
+      .closest('.nav__links')
+      .querySelectorAll('.nav__link');
+    siblings.forEach(el => {
+      if (el !== navLink) el.style.opacity = this;
+    });
+
+    const logo = navLink.closest('.nav').querySelector('#logo');
+    logo.style.opacity = this;
+  }
+};
+
+//mouse over
+nav.addEventListener('mouseover', handleHover.bind(0.5)); // passing 'argument' into handler
+
+//mouse out
+nav.addEventListener('mouseout', handleHover.bind(1));
 ///////////////////////////////////////////
 
 //Tabbed Component/////////////////////////
@@ -81,7 +105,6 @@ const tabsContent = document.querySelectorAll('.operations__content');
 
 tabsContainer.addEventListener('click', e => {
   const clicked = e.target.closest('.operations__tab');
-  console.log(clicked);
 
   //Guard Clause => its an (if statement) which will return when it has a certain condition is matched, and none of the code after it will be excecuted
   if (!clicked) return;
@@ -91,14 +114,11 @@ tabsContainer.addEventListener('click', e => {
   clicked.classList.add('operations__tab--active');
 
   //Activate the content area
-  document
-    .querySelector('.operations__content')
-    .classList.remove('operations__content--active');
+  tabsContent.forEach(tc => tc.classList.remove('operations__content--active'));
   document
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
 });
-
 ///////////////////////////////////////////
 //End project/////////////////////////////////////////////////////////////////
 //
