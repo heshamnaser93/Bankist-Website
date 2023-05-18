@@ -96,6 +96,17 @@ nav.addEventListener('mouseover', handleHover.bind(0.5)); // passing 'argument' 
 
 //mouse out
 nav.addEventListener('mouseout', handleHover.bind(1));
+
+//Sticky Navigation
+const section1Coords = document
+  .querySelector('#section--1')
+  .getBoundingClientRect();
+//console.log(section1Coords);
+window.addEventListener('scroll', () => {
+  window.scrollY > section1Coords.top
+    ? document.querySelector('.nav').classList.add('sticky')
+    : document.querySelector('.nav').classList.remove('sticky');
+});
 ///////////////////////////////////////////
 
 //Tabbed Component/////////////////////////
