@@ -98,15 +98,31 @@ nav.addEventListener('mouseover', handleHover.bind(0.5)); // passing 'argument' 
 nav.addEventListener('mouseout', handleHover.bind(1));
 
 //Sticky Navigation
-const section1Coords = document
-  .querySelector('#section--1')
-  .getBoundingClientRect();
-//console.log(section1Coords);
-window.addEventListener('scroll', () => {
-  window.scrollY > section1Coords.top
-    ? document.querySelector('.nav').classList.add('sticky')
-    : document.querySelector('.nav').classList.remove('sticky');
-});
+// const section1Coords = document
+//   .querySelector('#section--1')
+//   .getBoundingClientRect();
+// //console.log(section1Coords);
+// window.addEventListener('scroll', () => {
+//   window.scrollY > section1Coords.top
+//     ? document.querySelector('.nav').classList.add('sticky')
+//     : document.querySelector('.nav').classList.remove('sticky');
+// });
+
+//Sticky navigation: Intersection Observer API
+const obsCallback = function (entries, observer) {
+  //console.log('func is called');
+  entries.forEach(entry => console.log(entry));
+}; //this callback func will get called each time the observed element will intersect the root element at the threshold we defined
+
+const obsOptions = {
+  root: null, //root is the element which we want our target to intersect
+  //threshold: 0.1, //the percentage of intersection at which the observer callback will be called
+  threshold: [0, 0.2],
+};
+
+const observer = new IntersectionObserver(obsCallback, obsOptions);
+observer.observe(section1);
+
 ///////////////////////////////////////////
 
 //Tabbed Component/////////////////////////
