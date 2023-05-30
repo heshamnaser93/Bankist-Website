@@ -109,21 +109,44 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 // });
 
 //Sticky navigation: Intersection Observer API
-const obsCallback = function (entries, observer) {
-  //console.log('func is called');
-  entries.forEach(entry => console.log(entry));
-}; //this callback func will get called each time the observed element will intersect the root element at the threshold we defined
-
-const obsOptions = {
-  root: null, //root is the element which we want our target to intersect
-  //threshold: 0.1, //the percentage of intersection at which the observer callback will be called
-  threshold: [0, 0.2],
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  entry.intersectionRatio === 0
+    ? document.querySelector('.nav').classList.add('sticky')
+    : document.querySelector('.nav').classList.remove('sticky');
 };
+const navHeight = nav.getBoundingClientRect().height;
+const obsOptions = { root: null, threshold: 0, rootMargin: `-${navHeight}px` };
+const headerObserver = new IntersectionObserver(stickyNav, obsOptions);
 
-const observer = new IntersectionObserver(obsCallback, obsOptions);
-observer.observe(section1);
-
+headerObserver.observe(header);
 ///////////////////////////////////////////
+
+//Reveal Sections/////////////////////////
+const revealObserver = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+
+  //Guard Clause
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+const revealObsOptions = {
+  root: null,
+  threshold: 0.1,
+};
+const sectionObserver = new IntersectionObserver(
+  revealObserver,
+  revealObsOptions
+);
+
+const allSections = document.querySelectorAll('.section');
+allSections.forEach(section => {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
+//////////////////////////////////////////
 
 //Tabbed Component/////////////////////////
 const tabs = document.querySelectorAll('.operations__tab');
@@ -353,5 +376,20 @@ tabsContainer.addEventListener('click', e => {
 // [...h1.parentElement.children].forEach(el => {
 //   if (el !== h1) console.log('Not h1!!');
 // });
+/////////////////////////////////////
+
+//Intersaction Observer API//////////
+// const obsCallback = function (entries, observer) {
+//   entries.forEach(entry => console.log(entry));
+// }; //this callback func will get called each time the observed element will intersect the root element at the threshold we defined
+
+// const obsOptions = {
+//   root: null, //root is the element which we want our target to intersect
+//   //threshold: 0.1, //the percentage of intersection at which the observer callback will be called
+//   threshold: [0, 0.2],
+// };
+
+// const observer = new IntersectionObserver(obsCallback, obsOptions);
+// observer.observe(section1);
 /////////////////////////////////////
 //End Lectures/////////////////////////////////////////////////////////////////
