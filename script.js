@@ -97,17 +97,6 @@ nav.addEventListener('mouseover', handleHover.bind(0.5)); // passing 'argument' 
 //mouse out
 nav.addEventListener('mouseout', handleHover.bind(1));
 
-//Sticky Navigation
-// const section1Coords = document
-//   .querySelector('#section--1')
-//   .getBoundingClientRect();
-// //console.log(section1Coords);
-// window.addEventListener('scroll', () => {
-//   window.scrollY > section1Coords.top
-//     ? document.querySelector('.nav').classList.add('sticky')
-//     : document.querySelector('.nav').classList.remove('sticky');
-// });
-
 //Sticky navigation: Intersection Observer API
 const stickyNav = function (entries) {
   const [entry] = entries;
@@ -125,7 +114,6 @@ headerObserver.observe(header);
 //Reveal Sections/////////////////////////
 const revealObserver = function (entries, observer) {
   const [entry] = entries;
-  console.log(entry);
 
   //Guard Clause
   if (!entry.isIntersecting) return;
@@ -134,7 +122,7 @@ const revealObserver = function (entries, observer) {
 };
 const revealObsOptions = {
   root: null,
-  threshold: 0.1,
+  threshold: 0,
 };
 const sectionObserver = new IntersectionObserver(
   revealObserver,
@@ -146,6 +134,27 @@ allSections.forEach(section => {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 });
+//////////////////////////////////////////
+
+//Lazy Loading Images/////////////////////
+const imgTargets = document.querySelectorAll('img[data-src]');
+//console.log(imgTargets);
+const lazyImgObserver = function (entries, observer) {
+  const [entry] = entries;
+
+  //Clause Guard
+  if (!entry.isIntersecting) return;
+
+  entry.target.src = entry.target.dataset.src;
+
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+  observer.unobserve(entry.target);
+};
+const lazyObsOptions = { root: null, threshold: 0.1, rootMargin: '200px' };
+const imageObserver = new IntersectionObserver(lazyImgObserver, lazyObsOptions);
+imgTargets.forEach(img => imageObserver.observe(img));
 //////////////////////////////////////////
 
 //Tabbed Component/////////////////////////
@@ -170,6 +179,40 @@ tabsContainer.addEventListener('click', e => {
     .classList.add('operations__content--active');
 });
 ///////////////////////////////////////////
+
+//Slider Component////////////////////////
+const sliderBtnL = document.querySelector('.slider__btn--left');
+const sliderBtnR = document.querySelector('.slider__btn--right');
+const slides = document.querySelectorAll('.slide');
+const slidesNum = slides.length;
+let currentSlide = 0;
+
+const goToSlide = function (slide) {
+  slides.forEach((s, i) => {
+    console.log(slide, i);
+    s.style.transform = `translateX(${(i - slide) * 100}%)`;
+  });
+};
+
+goToSlide(0); //Calling in the first by 'zero'
+
+//Next Slide
+const nextSlide = function () {
+  if (currentSlide === slidesNum - 1) currentSlide = 0;
+  else currentSlide++;
+
+  goToSlide(currentSlide);
+};
+sliderBtnR.addEventListener('click', nextSlide);
+
+//Previous Slide
+const previousSlide = function () {
+  if (currentSlide === 0) currentSlide = slides.length - 1;
+  else currentSlide--;
+  goToSlide(currentSlide);
+};
+sliderBtnL.addEventListener('click', previousSlide);
+//////////////////////////////////////////
 //End project/////////////////////////////////////////////////////////////////
 //
 //
@@ -377,6 +420,18 @@ tabsContainer.addEventListener('click', e => {
 //   if (el !== h1) console.log('Not h1!!');
 // });
 /////////////////////////////////////
+
+//Sticky Navigation///////////////// *Bad Practise*
+// const section1Coords = document
+//   .querySelector('#section--1')
+//   .getBoundingClientRect();
+// //console.log(section1Coords);
+// window.addEventListener('scroll', () => {
+//   window.scrollY > section1Coords.top
+//     ? document.querySelector('.nav').classList.add('sticky')
+//     : document.querySelector('.nav').classList.remove('sticky');
+// });
+////////////////////////////////////
 
 //Intersaction Observer API//////////
 // const obsCallback = function (entries, observer) {
