@@ -181,37 +181,85 @@ tabsContainer.addEventListener('click', e => {
 ///////////////////////////////////////////
 
 //Slider Component////////////////////////
-const sliderBtnL = document.querySelector('.slider__btn--left');
-const sliderBtnR = document.querySelector('.slider__btn--right');
-const slides = document.querySelectorAll('.slide');
-const slidesNum = slides.length;
-let currentSlide = 0;
+//put all the slider in a function
+const slider = function () {
+  const sliderBtnL = document.querySelector('.slider__btn--left');
+  const sliderBtnR = document.querySelector('.slider__btn--right');
+  const slides = document.querySelectorAll('.slide');
+  const slidesNum = slides.length;
+  let currentSlide = 0;
 
-const goToSlide = function (slide) {
-  slides.forEach((s, i) => {
-    console.log(slide, i);
-    s.style.transform = `translateX(${(i - slide) * 100}%)`;
+  const goToSlide = function (slide) {
+    slides.forEach((s, i) => {
+      s.style.transform = `translateX(${(i - slide) * 100}%)`;
+    });
+  };
+
+  //Next Slide
+  const nextSlide = function () {
+    if (currentSlide === slidesNum - 1) currentSlide = 0;
+    else currentSlide++;
+    goToSlide(currentSlide);
+    activateDot(currentSlide);
+  };
+  sliderBtnR.addEventListener('click', nextSlide);
+
+  //Previous Slide
+  const previousSlide = function () {
+    if (currentSlide === 0) currentSlide = slides.length - 1;
+    else currentSlide--;
+    goToSlide(currentSlide);
+    activateDot(currentSlide);
+  };
+  sliderBtnL.addEventListener('click', previousSlide);
+
+  //Changing slider by pressing on arrowkeys
+  document.addEventListener('keydown', function (e) {
+    e.key === 'ArrowRight' && nextSlide();
+    e.key === 'ArrowLeft' && previousSlide();
   });
+
+  //Creating dots for slider
+  const dotsContainer = document.querySelector('.dots');
+  const createDots = function () {
+    slides.forEach((_, i) => {
+      dotsContainer.insertAdjacentHTML(
+        'beforeend',
+        `<button class='dots__dot' data-slide='${i}'></button>`
+      );
+    });
+  };
+
+  //clicking on dots
+  dotsContainer.addEventListener('click', function (e) {
+    if (e.target.classList.contains('dots__dot')) {
+      console.log(e);
+      const { slide } = e.target.dataset;
+      goToSlide(slide);
+      activateDot(slide);
+    }
+  });
+
+  //Activate dot
+  const activateDot = function (slide) {
+    document
+      .querySelectorAll('.dots__dot')
+      .forEach(dot => dot.classList.remove('dots__dot--active'));
+    document
+      .querySelector(`.dots__dot[data-slide='${slide}']`)
+      .classList.add('dots__dot--active');
+  };
+
+  //initial calls
+  const init = function () {
+    goToSlide(0);
+    createDots();
+    activateDot(0);
+  };
+  init();
 };
 
-goToSlide(0); //Calling in the first by 'zero'
-
-//Next Slide
-const nextSlide = function () {
-  if (currentSlide === slidesNum - 1) currentSlide = 0;
-  else currentSlide++;
-
-  goToSlide(currentSlide);
-};
-sliderBtnR.addEventListener('click', nextSlide);
-
-//Previous Slide
-const previousSlide = function () {
-  if (currentSlide === 0) currentSlide = slides.length - 1;
-  else currentSlide--;
-  goToSlide(currentSlide);
-};
-sliderBtnL.addEventListener('click', previousSlide);
+slider(); //Calling the whole slider
 //////////////////////////////////////////
 //End project/////////////////////////////////////////////////////////////////
 //
@@ -446,5 +494,23 @@ sliderBtnL.addEventListener('click', previousSlide);
 
 // const observer = new IntersectionObserver(obsCallback, obsOptions);
 // observer.observe(section1);
+/////////////////////////////////////
+
+//Lifescycle DOM Events//////////////
+//DOMContentLoaded Event
+document.addEventListener('DOMContentLoaded', function (e) {
+  console.log('HTML parsed and the DOM tree loaded!', e);
+});
+
+//Before Load the fully page
+window.addEventListener('load', function (e) {
+  console.log('Page Fully Loaded!', e);
+});
+
+//Before Unload
+// window.addEventListener('beforeunload', function (e) {
+//   e.preventDefault();
+//   e.returnValue = '';
+// });
 /////////////////////////////////////
 //End Lectures/////////////////////////////////////////////////////////////////
